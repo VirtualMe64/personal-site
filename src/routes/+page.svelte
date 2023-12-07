@@ -1,11 +1,19 @@
 <script lang="ts">
-    import Hero from "../components/Hero.svelte"
+    import Hero from "../components/Hero.svelte";
+    import Navbar from "../components/Navbar.svelte";
+    
+    let finished : boolean;
 </script>
 
-<Hero />
+<Hero bind:finished={finished}/>
 
 <div class="w-full h-[100vh] landing-bg" />
-<div class="h-[200vh] bg-white" />
+
+<Navbar showLogo={finished}/>
+
+<div class="h-[150vh] bg-white flex flex-col items-center justify-end">
+    <p class="text-black mb-[300px]">I am a cool person</p>
+</div>
 
 <style>
     .landing-bg {

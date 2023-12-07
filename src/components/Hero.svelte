@@ -22,31 +22,29 @@
     $: fontRems = interpolate(width > 850 ? 8 : 3.5, 1.5, y, false);
     let paddingRems = 2;
     $: paddingRems = interpolate(2, 0.5, y, false);
-    let borderWidth = 2;
+    let borderWidth = 4;
     $: borderWidth = interpolate(4, 4, y, false);
     let innerPct = 100;
     $: innerPct = interpolate(100, 30, y, false);
     let textPct = 100;
     $: textPct = interpolate(100, 80, y, false);
-    let fullText = true;
-    $: fullText = (y / parallax < yDefault);
+    export let finished : boolean = false;
+    $: finished = (y > yDefault + 50);
 </script>
 
-<div class="flex flex-col absolute overflow-clip w-min"
-     style="transform: translate(-{translatePct}%,-{translatePct}%) translate(5px, {y}px);top:{yOffsetPct}%;left:{xOffsetPct}%">
-    <div style="width: {fullText ? innerPct : 100}%; border-width: {borderWidth}px;"
+{#if !finished}
+<div class="flex flex-col absolute overflow-clip w-min z-50"
+     style="transform: translate(-{translatePct}%,-{translatePct}%) translate(0px, {y}px);top:{yOffsetPct}%;left:{xOffsetPct}%">
+    <div style="width: {innerPct}%; border-width: {borderWidth}px;"
          class="rounded-3xl border-black">
-        <div class="overflow-clip" style="width: {fullText ? textPct : 100}%;">
+        <div class="overflow-clip" style="width: {textPct}%;">
             <h1 class="font-semibold p-4 text-black leading-tight"
                 style="font-size:{fontRems}rem;padding:{paddingRems}rem">
-                {#if fullText}
                 Sammy<br>Taubman
-                {:else}
-                S<br>T
-                {/if}
             </h1>
         </div>
     </div>
 </div>
+{/if}
 
 <svelte:window bind:scrollY={y} bind:innerHeight={yDefault} bind:innerWidth={width}/>
